@@ -40,7 +40,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "D:/Internship Ahmedabad/Projects/travel-buddy-react/public/images")
+        callback(null, "FOLDER-LOCATION/FrontEnd/public/images")
     },
     filename: (req, file, callback) => {
         callback(null, file.originalname)

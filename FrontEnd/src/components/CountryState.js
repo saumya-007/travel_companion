@@ -13,7 +13,7 @@ export const CountryState = () => {
     let [startlongitude, setStartlongitude] = useState(Number(params.startLon))
     let [endlatitude, setEndlatitude] = useState(Number(params.endLat))
     let [endlongitude, setEndlongitude] = useState(Number(params.endLon))
-    mapboxgl.accessToken = 'YOUR-ACCESS-TOEKN';
+    mapboxgl.accessToken = 'YOUR-ACCESS-TOKEN';
     console.log(startlatitude, startlongitude, endlatitude, endlongitude);
     const mapContainer = useRef(null);
     let map = useRef();
