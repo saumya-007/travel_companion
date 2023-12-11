@@ -9,7 +9,10 @@ let citySchema = new mongoose.Schema({
     },
     longitude: {
         type: mongoose.Schema.Types.Decimal128,
-    }
+    },
+    stateName: {
+        type: String,
+    },
 })
 
 let cityModel = mongoose.model("city", citySchema);

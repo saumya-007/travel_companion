@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react'
 import { ScheduleTrip } from './ScheduleTrip'
 import { ScheduledTrips } from './ScheduledTrips'
@@ -13,7 +14,7 @@ export const Rides = () => {
     let [added, setAdded] = useState();
 
     useEffect(async () => {
-        await axios.get("http://localhost:8080/vehicles/" + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + localStorage.getItem('userId')).then(res => {
             let vehicleName = []
             res.data.data.map(ele => vehicleName.push(ele.vehicleName))
             setVehicles(vehicleName)
@@ -22,32 +23,28 @@ export const Rides = () => {
         })
     }, [])
     useEffect(async () => {
-        await axios.get("http://localhost:8080/trips/" + localStorage.getItem('userId')).then(res => {
-            console.log(res.data)
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")
-            // console.log(res.data.data)
         }).catch(err => {
             console.log(err)
         })
     }, [])
     useEffect(async () => {
-        await axios.get("http://localhost:8080/trips/" + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")
-            // console.log(res.data.data)
         }).catch(err => {
             console.log(err)
         })
     }, [added])
     useEffect(async () => {
-        await axios.get("http://localhost:8080/trips/" + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")
-            // console.log(res.data.data)
         }).catch(err => {
             console.log(err)
         })
@@ -55,7 +52,7 @@ export const Rides = () => {
     return (
         <>
 
-            <div>
+            <div className='pt-5'>
                 {
                     vehicles !== undefined && trips !== undefined ? (
                         < ScheduleTrip vehicles={vehicles} key={vehicles} setAdded={setAdded} />

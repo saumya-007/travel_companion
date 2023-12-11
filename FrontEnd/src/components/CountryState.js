@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css' // Updating node module will keep css up to date.
 import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css' // Updating node module will keep css up to date.
 
+// Can be implemented in future 
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 
 import * as MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
@@ -13,8 +15,8 @@ export const CountryState = () => {
     let [startlongitude, setStartlongitude] = useState(Number(params.startLon))
     let [endlatitude, setEndlatitude] = useState(Number(params.endLat))
     let [endlongitude, setEndlongitude] = useState(Number(params.endLon))
-    mapboxgl.accessToken = 'YOUR-ACCESS-TOKEN';
-    console.log(startlatitude, startlongitude, endlatitude, endlongitude);
+    // Need to change this to env file
+    mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_ACCESS_TOKEN;
     const mapContainer = useRef(null);
     let map = useRef();
     const [lng, setLng] = useState(startlongitude);
@@ -38,6 +40,7 @@ export const CountryState = () => {
             directions.setOrigin([startlongitude, startlatitude]);
             directions.setDestination([endlongitude, endlatitude]);
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div>

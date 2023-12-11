@@ -7,11 +7,9 @@ export const SortedRequestsItem = (props) => {
 
     let [disabled, setDisabled] = useState()
     let [status, setStatus] = useState("")
-    // console.log(props.data)
     const apiCall = (sendThis) => {
-        axios.put("http://localhost:8080/tripPassengers", sendThis).then(res => {
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengers`, sendThis).then(res => {
             setDisabled(true)
-            // console.log(res)
         }).catch(err => {
             console.log(err)
         })
@@ -30,14 +28,11 @@ export const SortedRequestsItem = (props) => {
                 receiverId: props.data.user._id,
                 trip: props.data.trip._id
             }
-            // console.log(sendItem)
             setStatus("changedtoaccepted")
-            axios.post("http://localhost:8080/conversations", sendItem).then(res => {
-                // console.log(res)
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/conversations`, sendItem).then(res => {
             }).catch(err => {
                 console.log(err)
             })
-            // window.location.reload(false);
         }
     }
     const requestReject = () => {
@@ -55,7 +50,7 @@ export const SortedRequestsItem = (props) => {
         if (props.data.isAccepted !== "requested") {
             setDisabled(true)
         }
-    })
+    },[props.data.isAccepted])
     return (
         <>
             <div className="au-message__item-inner">

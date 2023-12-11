@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
-const cors = require('cors')
+const cors = require('cors');
+require('dotenv').config();
 
 const sessionController = require("./controller/session-controller");
 const roleController = require("./controller/role-controller");
@@ -16,6 +17,8 @@ const messageController = require("./controller/message-controller")
 const previousSearcheController = require("./controller/PreviousSearches-controller")
 const vehicleCategoryController = require("./controller/vehicle-category-controller")
 
+const runStartUp = require("./start-up-scripts/run-all.js");
+
 const app = express();
 
 //middleware
@@ -25,13 +28,14 @@ app.use(cors());
 app.options('*', cors())
 
 //database
-mongoose.connect('mongodb://localhost/travel-buddy', function (err) {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_CLUSTER_USERNAME}:${process.env.MONGO_CLUSTER_PASSWORD}@${process.env.MONGO_CLUSTER_DB}.w0shzi8.mongodb.net/?retryWrites=true&w=majority`, async function (err) {
     if (err) {
-        console.log("DB Connection failed");
+        console.log("@> DB Connection failed !");
         console.log(err);
     }
     else {
-        console.log("DB connnected");
+        console.log("@> DB connnected");
+        await runStartUp();
     }
 })
 
@@ -40,7 +44,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, "FOLDER-LOCATION/FrontEnd/public/images")
+        callback(null, "../FrontEnd/public/images")
     },
     filename: (req, file, callback) => {
         callback(null, file.originalname)
@@ -59,14 +63,12 @@ app.get("/signup", sessionController.signup)
 app.post("/saveuser", sessionController.saveuser);
 
 //role controller
-
 app.post("/roles", roleController.addRole);
 app.get("/roles", roleController.getAllRole);
 app.delete("/roles/:roleId", roleController.deleteRole);
 app.put("/roles", roleController.updateRole);
 
 //user controller 
-
 app.post("/users", upload.single("profilephoto"), userController.addUser);
 app.get("/users", userController.getAllUser);
 app.delete("/users/:userId", userController.deleteUser);
@@ -77,7 +79,6 @@ app.get("/users/:userId", userController.getRequestedUser);
 app.post("/login", userController.login);
 
 //vehicle controller
-
 app.post("/vehicles", vehicleController.addVehicle);
 app.get("/vehicles", vehicleController.getAllVehicle);
 app.get("/vehicles/:userId", vehicleController.getRequestedVehicle);
@@ -85,28 +86,24 @@ app.delete("/vehicles/:vehicleId", vehicleController.deleteVehicle);
 app.put("/vehicles", vehicleController.updateVehicle);
 
 //city controller
-
 app.post("/cities", cityController.addCity);
 app.get("/cities", cityController.getAllCity);
 app.delete("/cities/:cityId", cityController.deleteCity);
 app.put("/cities", cityController.updateCity);
 
 //inter city controller
-
 app.post("/interCities", interCityController.addInterCity);
 app.get("/interCities", interCityController.getAllInterCity);
 app.delete("/interCities/:interCityId", interCityController.deleteInterCity);
 app.put("/interCities", interCityController.updateInterCity);
 
 //base Fair Types
-
 app.post("/baseFairtypes", baseFairTypeController.addbaseFairTypes);
 app.get("/baseFairtypes", baseFairTypeController.getAllbaseFairTypes);
 app.delete("/baseFairtypes/:baseFairTypeId", baseFairTypeController.deletebaseFairTypes);
 app.put("/baseFairtypes", baseFairTypeController.updatebaseFairTypes);
 
 //trip 
-
 app.post("/trips", tripController.addTrips);
 app.get("/trips/:user", tripController.getRequestedTrips);
 app.get("/trips/:startLocation/:endLocation", tripController.getTripsForPatron);
@@ -114,7 +111,6 @@ app.delete("/trips/:tripId", tripController.deleteTrips);
 app.put("/trips", tripController.updateTrips);
 
 //trip passenger
-
 app.post("/tripPassengers", tripPassengerController.addTripPassengers);
 app.get("/tripPassengers/:userId", tripPassengerController.getAllTripPassengers);
 app.get("/tripPassengerStatus/:tripId/:userId", tripPassengerController.getStatusTripPassengers);
@@ -122,28 +118,22 @@ app.delete("/tripPassengers/:tripPassengerId", tripPassengerController.deleteTri
 app.put("/tripPassengers", tripPassengerController.updateTripPassengers);
 
 //category
-
 app.post("/category", vehicleCategoryController.addCategory);
 app.get("/category", vehicleCategoryController.getCategory);
 
 //conversations
-
 app.post("/conversations", conversationController.addConversation)
 app.get("/conversations/:userId", conversationController.getRequestedConversation)
 
 //messages
-
 app.post("/messages", messageController.addMessage)
 app.get("/messages/:conversationId", messageController.getRequestedMessage)
 
 //searches
-
 app.post("/addsearch", previousSearcheController.addSearch)
 app.get("/addsearch/:userId", previousSearcheController.getRequiredSearch)
 
-//upload profile pic
-
 //server
-app.listen(8080, function () {
-    console.log("server started");
+app.listen(process.env.BACKEND_SERVER_PORT, function () {
+    console.log(`@> server started on ${process.env.BACKEND_SERVER_PORT}`);
 })

@@ -1,8 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/alt-text */
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
 export const ConversationList = ({ conversations, connectedUsers }) => {
-    // console.log(conversations)
     let [patronName, setPatronName] = useState()
     let [patronId, setPatronId] = useState()
     let [profilephoto, setProfilePhoto] = useState()
@@ -12,7 +13,7 @@ export const ConversationList = ({ conversations, connectedUsers }) => {
         let index = 0;
 
         while (!found && index < list.length) {
-            if (list[index] == value) {
+            if (list[index] === value) {
                 found = true;
                 position = index;
             } else {
@@ -23,10 +24,7 @@ export const ConversationList = ({ conversations, connectedUsers }) => {
     }
     useEffect(() => {
         const patronUser = conversations.members.find((member) => member !== localStorage.getItem("userId"))
-        axios.get("http://localhost:8080/users/" + patronUser).then(res => {
-            // console.log(res.data.data.profilephoto)
-            // console.log(connectedUsers.includes(patronId))
-            // console.log(includesUsers(res.data.data._id, connectedUsers))
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users/` + patronUser).then(res => {
             setPatronId(res.data.data._id)
             // includesUsers(res.data.data._id,)
             setPatronName(res.data.data.firstName);
@@ -34,6 +32,7 @@ export const ConversationList = ({ conversations, connectedUsers }) => {
         }).catch(err => {
             console.log(err);
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <>
@@ -43,7 +42,6 @@ export const ConversationList = ({ conversations, connectedUsers }) => {
                         (connectedUsers.includes(patronId) ?
                             <div className="avatar-wrap online mr-3">
                                 <div className="avatar">
-                                    {console.log(profilephoto)}
                                     <img src={`/images/` + profilephoto} />
                                 </div>
                             </div>

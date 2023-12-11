@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import { Results } from './Results'
 import axios from 'axios'
@@ -20,7 +21,7 @@ export const TripsSearch = () => {
         if (startLocation === endLocation) {
             toast.error("Please Select Different Start and End Locations !")
         } else {
-            axios.get("http://localhost:8080/trips/" + startLocation + '/' + endLocation).then(res => {
+            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + startLocation + '/' + endLocation).then(res => {
                 console.log(res)
                 setTrips(res.data.data)
                 let sendThis = {
@@ -28,12 +29,10 @@ export const TripsSearch = () => {
                     start: startLocation,
                     end: endLocation,
                 }
-                axios.post("http://localhost:8080/addsearch", sendThis).then(res => {
-                    // console.log(res.data);
+                axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/addsearch`, sendThis).then(res => {
                 }).catch(err => {
                     console.log(err);
                 })
-                // console.log(res.data.data)
             }).catch(err => {
                 console.log(err)
             })
@@ -42,13 +41,12 @@ export const TripsSearch = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:8080/addsearch/" + localStorage.getItem("userId")).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/addsearch/` + localStorage.getItem("userId")).then(res => {
             setPreviousSearches(res.data.data)
         }).catch(err => {
             console.log(err);
         })
-        axios.get("http://localhost:8080/cities").then(res => {
-            // console.log(res)
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/cities`).then(res => {
             setCityDropDown(res.data.data)
         })
     }, [])
@@ -114,7 +112,7 @@ export const TripsSearch = () => {
                         </div>
                     </form>
                 </div>
-                <div>
+                <div className='mt-5'>
                     {
                         trips !== undefined ? (
                             <Results trips={trips} />

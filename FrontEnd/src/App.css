@@ -2,11 +2,11 @@
 .wrapper{
     display:grid;
     grid-template-columns: 18% 82%;
-    height: 100vh;
+    height: auto;
 }
 .childWrapper{
     display:grid;
-    grid-template-rows: 10vh 90vh;
+    /* grid-template-rows: 10vh 90vh; */
 }
 .card-footer-edit-profile{
     text-align: center;
@@ -38,6 +38,7 @@ display: block;
     grid-template-rows: 25% 75%;
     height: 100%;
     width: 100%;
+    margin-top: 90px;
 }
 .searchbar{
     padding: 20px;
@@ -196,6 +197,7 @@ width: 300px;
 
 .chatBox{
     padding: 20px;
+    margin-top: 80px;
 }
 .message{
     display: flex;
@@ -262,6 +264,7 @@ width: 300px;
 }
 .chatMenuWrapper{
     padding: 10px;
+    margin-top: 60px;
 }
 .chatMenuInput{
     width: 90%;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { SortedRequests } from './SortedRequests';
@@ -9,10 +10,8 @@ export const Requests = () => {
     let count = 0
     let [tripsRequest, setTripRequests] = useState();
     useEffect(() => {
-        axios.get('http://localhost:8080/tripPassengers/' + localStorage.getItem("userId")).then(res => {
-            // console.log(res)
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengers/` + localStorage.getItem("userId")).then(res => {
             setTripRequests(res.data.data)
-            // console.log(res.data.data);
         }).catch(err => {
             console.log(err)
         })

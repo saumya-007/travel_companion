@@ -11,6 +11,7 @@ export const AddVehicle = (props) => {
     let [vehicleName, setVehicleName] = useState('')
     let [vehicleCategory, setVehicleCategory] = useState('')
     let [vehicleCapacity, setVehicleCapacity] = useState('')
+    let [vehicleCapacityList, setVehicleCapacityList] = useState([]);
     let [registrationNumber, setRegistrationNumber] = useState('')
     let [dropDown, setDropDown] = useState()
 
@@ -51,7 +52,7 @@ export const AddVehicle = (props) => {
                 registrationNumber: registrationNumber,
                 isActive: false,
             }
-            axios.post("http://localhost:8080/vehicles", sendThis).then(res => {
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles`, sendThis).then(res => {
                 console.log(res)
                 props.setAdded("added")
                 setVehicleCapacity("default")
@@ -63,12 +64,19 @@ export const AddVehicle = (props) => {
         }
     }
     useEffect(() => {
-        axios.get("http://localhost:8080/category").then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/category`).then(res => {
             setDropDown(res.data.data)
         }).catch(err => {
             console.log(err)
         })
     }, [])
+
+    useEffect(() => {
+        if (dropDown) {
+            setVehicleCapacityList(dropDown.find(item => item.category === vehicleCategory)?.categoryCapacity); 
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [vehicleCategory])
     return (
         <>
             <form onSubmit={addVehicleDetails} className="form-horizontal" ref={form}>
@@ -97,11 +105,14 @@ export const AddVehicle = (props) => {
                     <div className="col col-md-4">
                         <label htmlFor="vehicleCapacity-input" className=" form-control-label">Vehicle Capacity</label>
                         <select onChange={(e) => setVehicleCapacity(e.target.value)} className="form-control">
-                            <option value="default" defaultValue={true}>Select Capacity</option>
-                            <option value="2">2</option>
-                            <option value="5">5</option>
-                            <option value="7">7</option>
-                            <option value="10">10</option>
+                            <option value="default" defaultValue={true}>Select Available Capacity</option>
+                            {
+                                vehicleCapacityList ? vehicleCapacityList.map(item => {
+                                        return (
+                                            <option value={item} key={item}>{item}</option>
+                                        ) 
+                                    }) : null
+                            }
                         </select>
                     </div>
                     <div className="col col-md-4">

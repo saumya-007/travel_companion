@@ -12,7 +12,6 @@ export const UpdateVehicle = ({ data, setDeleted, setUpdated }) => {
                             <th>Catogery</th>
                             <th>Capacity</th>
                             <th>Registration Number</th>
-                            {/* <th>Insurance URL</th> */}
                             <th>Edit</th>
                             <th></th>
                         </tr>

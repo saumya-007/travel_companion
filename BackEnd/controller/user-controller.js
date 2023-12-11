@@ -8,7 +8,6 @@ const userModel = require("../model/user-model");
 var ObjectId = require('mongodb').ObjectId;
 const jwt = require("jsonwebtoken");
 
-
 //login
 module.exports.login = async function (req, res) {
     let param_email = req.body.email;
@@ -20,11 +19,7 @@ module.exports.login = async function (req, res) {
 
     let role_id = await roleModel.findOne({ roleName: role })
     let roleId = new ObjectId(role_id);
-    // console.log(param_email)
-    // console.log(role_id)
-    // console.log(roleId)
     let data = await userModel.find({ $and: [{ role: roleId }, { email: param_email }] }).exec()
-    // console.log(data)
     if (data.length !== 0) {
         compare = bcrypt.compareSync(param_password, data[0].password);
         userId = data[0]._id;
@@ -67,7 +62,6 @@ module.exports.login = async function (req, res) {
 
 
 module.exports.addUser = async function (req, res) {
-
     let firstName = req.body.name;
     let email = req.body.email;
     let phoneNumber = req.body.phoneNumber;
@@ -76,7 +70,8 @@ module.exports.addUser = async function (req, res) {
     let gender = req.body.gender;
 
     password = bcrypt.hashSync(password, 10);
-    let roleId = await roleModel.findOne({ roleName: role }).clone()
+    // Need to figure out why is it not getting role
+    let roleId = await roleModel.findOne({ roleName: 'captain' }).clone()
     await userModel.find({ email: email, role: roleId._id }, function (err, success) {
         if (err) {
             res.json({
@@ -173,7 +168,6 @@ module.exports.deleteUser = function (req, res) {
 module.exports.updateProfile = function (req, res) {
     let profilephoto = req.file.originalname;
     let userId = req.body.userId;
-    console.log(userId)
 
     userModel.updateMany({ _id: userId }, { profilephoto: profilephoto }, function (err, success) {
         if (err) {

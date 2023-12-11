@@ -11,7 +11,8 @@ module.exports.addSearch = async function (req, res) {
         }, {
             end: req.body.end,
         }]
-    }).exec()
+    }).exec();
+
     if (query.length === 0) {
         data = new previousSearcheModel({
             userId: req.body.userId,
@@ -42,19 +43,18 @@ module.exports.addSearch = async function (req, res) {
     }
 }
 module.exports.getRequiredSearch = async function (req, res) {
-    await previousSearcheModel.find({ userId: req.params.userId }, function (err, success) {
-        if (err) {
-            res.json({
-                msg: "Failed to retrive data",
-                status: -1,
-                data: err,
-            })
-        } else {
-            res.json({
-                msg: "previous search found",
-                status: 200,
-                data: success,
-            })
-        }
-    })
+    try {
+        const previousSearches = await previousSearcheModel.find({ userId: req.params.userId });
+        res.json({
+            msg: "previous search found",
+            status: 200,
+            data: previousSearches,
+        })
+    } catch(err) {
+        res.json({
+            msg: "Failed to retrive data",
+            status: -1,
+            data: err,
+        })
+    }
 }

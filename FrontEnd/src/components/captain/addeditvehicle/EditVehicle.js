@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { AddVehicle } from './AddVehicle'
@@ -12,7 +13,7 @@ export const EditVehicle = () => {
     let [added, setAdded] = useState('');
     let [update, setUpdated] = useState('');
     useEffect(async () => {
-        await axios.get("http://localhost:8080/vehicles/" + user_id).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
             setData(res.data.data);
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -22,7 +23,7 @@ export const EditVehicle = () => {
         })
     }, [])
     useEffect(async () => {
-        await axios.get("http://localhost:8080/vehicles/" + user_id).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
             setData(res.data.data);
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -30,34 +31,34 @@ export const EditVehicle = () => {
         }).catch(err => {
             console.log(err)
         })
-    }, [added])
-    useEffect(async () => {
-        await axios.get("http://localhost:8080/vehicles/" + user_id).then(res => {
-            setData(res.data.data);
-            setDeleted("deletedcalled")
-            setAdded("addedcalled")
-            setUpdated("updatedcalled")
-        }).catch(err => {
-            console.log(err)
-        })
-    }, [deleted])
-    useEffect(async () => {
-        await axios.get("http://localhost:8080/vehicles/" + user_id).then(res => {
-            setData(res.data.data);
-            setDeleted("deletedcalled")
-            setAdded("addedcalled")
-            setUpdated("updatedcalled")
-        }).catch(err => {
-            console.log(err)
-        })
-    }, [update])
+    }, [added, deleted, update])
+    // useEffect(async () => {
+    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+    //         setData(res.data.data);
+    //         setDeleted("deletedcalled")
+    //         setAdded("addedcalled")
+    //         setUpdated("updatedcalled")
+    //     }).catch(err => {
+    //         console.log(err)
+    //     })
+    // }, [deleted])
+    // useEffect(async () => {
+    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+    //         setData(res.data.data);
+    //         setDeleted("deletedcalled")
+    //         setAdded("addedcalled")
+    //         setUpdated("updatedcalled")
+    //     }).catch(err => {
+    //         console.log(err)
+    //     })
+    // }, [update])
     return (
         <>
             <div className='card'>
                 <div className="card-header">
                     <strong>Add Vehicle</strong>
                 </div>
-                <div className="card-body">
+                <div className="card-body p-5">
                     <div>
                         <div className='p-3'>
                             <AddVehicle setAdded={setAdded} />

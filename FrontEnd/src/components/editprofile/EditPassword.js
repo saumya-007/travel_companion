@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
@@ -27,11 +28,8 @@ export const EditPassword = ({ stateUserId }) => {
             password: password,
             userId: stateUserId,
         };
-        console.log(sendThis);
         if (password === repassword && password !== '') {
-            // console.log("done");
-            axios.put("http://localhost:8080/users", sendThis).then(res => {
-                // console.log(res.data)
+            axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users`, sendThis).then(res => {
                 formPassword.current.value = null;
                 formRepassword.current.value = null;
             }).catch(err => {

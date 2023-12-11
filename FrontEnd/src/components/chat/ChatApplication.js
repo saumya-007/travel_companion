@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import { io } from 'socket.io-client';
 import React, { useEffect, useState, useRef } from 'react'
+import { toast } from 'react-toastify';
 import { ConversationList } from './ConversationList'
 import { Message } from './Message'
 
@@ -18,12 +20,15 @@ export const ChatApplication = () => {
 
     const onSend = async (e) => {
         e.preventDefault()
+        if (!(newMessage.current.value.trim().length)) {
+            toast.error("Can not send empty message !");
+            return;
+        }
         let sendThis = {
             conversationId: currentChat._id,
             sender: localStorage.getItem("userId"),
             text: newMessage.current.value,
         }
-        // console.log(sendThis);
         const receiverId = currentChat.members.find(member => member !== localStorage.getItem("userId"))
         socket.current.emit("sendMessage", {
             senderId: localStorage.getItem("userId"),
@@ -31,7 +36,7 @@ export const ChatApplication = () => {
             text: newMessage.current.value,
         })
 
-        await axios.post("http://localhost:8080/messages", sendThis).then(res => {
+        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/messages`, sendThis).then(res => {
             setMessages([...messages, res.data.data]);
             newMessage.current.value = ""
         }).catch(err => {
@@ -40,9 +45,15 @@ export const ChatApplication = () => {
 
     }
 
+    const handleEnterAsSend = async (e) => {
+        if(e.key === 'Enter') {
+            await onSend(e);
+        }
+    }
+
     //SOCKET IO
     useEffect(() => {
-        socket.current = io('ws://localhost:8900');
+        socket.current = io(`ws://localhost:8900`);
         socket.current.on("getMessage", data => {
             setArrivalMessage({
                 sender: data.senderId,
@@ -54,18 +65,16 @@ export const ChatApplication = () => {
     useEffect(() => {
         socket.current.emit("addUser", localStorage.getItem("userId"))
         socket.current.on("getUsers", users => {
-            console.log(users)
             let conUsr = []
             users.map(ele => {
-                conUsr.push(ele.userId)
+                return conUsr.push(ele.userId)
             })
             setConnectedUsers(conUsr)
         })
     }, [localStorage.getItem("userId")])
 
     useEffect(async () => {
-        await axios.get("http://localhost:8080/conversations/" + localStorage.getItem("userId")).then(res => {
-            // console.log(res)
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/conversations/` + localStorage.getItem("userId")).then(res => {
             setConversations(res.data.data);
         }).catch(err => {
             console.log(err)
@@ -79,11 +88,8 @@ export const ChatApplication = () => {
 
     useEffect(() => {
         if (currentChat) {
-            // console.log(currentChat._id);
-            axios.get("http://localhost:8080/messages/" + currentChat._id).then(res => {
-                // console.log(res)
+            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/messages/` + currentChat._id).then(res => {
                 setMessages(res.data.data);
-                // console.log(res.data.data);
             }).catch(err => {
                 console.log(err);
             })
@@ -96,6 +102,7 @@ export const ChatApplication = () => {
     return (
         <>
             <div className='chat-wrapper'>
+                {/* <div className='move-down'> */}
                 <div className='chatBox p-2'>
                     <div className='chatBoxWrapper'>
                         {
@@ -103,11 +110,9 @@ export const ChatApplication = () => {
                                 <>
                                     <div className='chatBoxTop'>
                                         {
-                                            // console.log(messages)
                                             messages !== undefined ?
                                                 messages.map(ele => {
                                                     return (
-                                                        // console.log(ele)
                                                         <div ref={scrollRef}>
                                                             <Message key={ele._id} own={ele.sender === localStorage.getItem("userId") ? true : false} message={ele} />
                                                         </div>
@@ -116,7 +121,7 @@ export const ChatApplication = () => {
                                         }
                                     </div>
                                     <div className='chatBoxBottom p-3'>
-                                        <textarea className="chatMessageInput" placeholder='Type Message' ref={newMessage}></textarea>
+                                        <textarea className="chatMessageInput" placeholder='Type Message' ref={newMessage} onKeyDown={handleEnterAsSend}></textarea>
                                         <button className='btn btn-primary' onClick={onSend}>Send</button>
                                     </div></> : <span className='text-center'>Open a conversation to start a chat</span>
                         }
@@ -124,7 +129,6 @@ export const ChatApplication = () => {
                 </div>
                 <div className='chatMenu'>
                     <div className='chatMenuWrapper'>
-                        {/* <input placeholder='Search' className='chatMenuInput'></input> */}
                         {
                             conversations !== undefined ?
                                 conversations.map(ele => {

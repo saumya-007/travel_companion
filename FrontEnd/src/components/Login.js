@@ -19,23 +19,27 @@ export const Login = () => {
 
     const logInFu = async (e) => {
         e.preventDefault()
+
+        if (!role) {
+            toast.error("Please Select a role !")
+        }
+
         let sendThis = {
             email: emailForm.current.value,
             password: passwordForm.current.value,
             role: role,
         }
-        await axios.post("http://localhost:8080/login", sendThis).then(res => {
-            // console.log(res.data)
+        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/login`, sendThis).then(res => {
             if (res.data.status === 200) {
                 let userdata = decodeToken(res.data.data)
-                console.log(userdata)
+
                 localStorage.setItem('token', res.data)
                 localStorage.setItem('userId', userdata.user)
                 localStorage.setItem('userName', userdata.name)
                 localStorage.setItem('profilephoto', userdata.profilephoto)
                 toast.success("Logged In Successfully !")
                 setTimeout(() => {
-                    userdata.roleName == 'patron' ?
+                    userdata.roleName === 'patron' ?
                         navigate('/patrondashboard/homecontent', { replace: true }) :
                         navigate('/captaindashboard/homecontent', { replace: true })
                 }, 2000);

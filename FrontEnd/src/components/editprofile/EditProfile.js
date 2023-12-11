@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react'
 import { EditUserDetails } from './EditUserDetails'
 import { EditPassword } from './EditPassword'

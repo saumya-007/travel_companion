@@ -108,7 +108,6 @@ module.exports.deleteTripPassengers = function (req, res) {
 module.exports.updateTripPassengers = function (req, res) {
     let tripPassengerId = req.body.tripPassengerId;
     let isAccepted = req.body.isAccepted;
-    console.log(tripPassengerId, isAccepted)
     tripPassengersModel.updateMany({ _id: tripPassengerId }, { isAccepted: isAccepted }, function (err, success) {
         if (err) {
             res.json({

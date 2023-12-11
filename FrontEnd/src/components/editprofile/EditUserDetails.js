@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,7 +20,7 @@ export const EditUserDetails = ({ setStateUserId }) => {
 
     //FEATCHING USERINFO AND SETTING IT TO STATE VARIABLES
     const getData = () => {
-        axios.get("http://localhost:8080/users/" + localStorage.getItem('userId')).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users/` + localStorage.getItem('userId')).then(res => {
             setUserId(res.data.data._id);
             setStateUserId(res.data.data._id);
             setName(res.data.data.firstName);
@@ -36,11 +37,11 @@ export const EditUserDetails = ({ setStateUserId }) => {
     }
     //FUNCTION CALLED ONLCICK TO CHANGE STATE VARIABLES
     const updateSendThisData = () => {
-        if (formName.current.value != "")
+        if (formName.current.value !== "")
             setName(formName.current.value);
-        if (formEmail.current.value != "")
+        if (formEmail.current.value !== "")
             setEmail(formEmail.current.value);
-        if (formNumber.current.value != "") {
+        if (formNumber.current.value !== "") {
             setNumber(formNumber.current.value);
         } else {
             setNumber(number.slice(3, number.length));
@@ -50,10 +51,9 @@ export const EditUserDetails = ({ setStateUserId }) => {
     // FUNCTION TO SEND UPDATED INFO
     const updateUserData = async (e) => {
         e.preventDefault();
-        if (gender == "default") {
+        if (gender === "default") {
             toast.error("Invalid Gender !")
         } else if (number.length !== 10) {
-            console.log(number)
             toast.error("Invalid Phone Number !")
         } else {
             let sendThis = {
@@ -64,7 +64,7 @@ export const EditUserDetails = ({ setStateUserId }) => {
                 userId: userId,
             };
             localStorage.setItem("userName", name)
-            await axios.put("http://localhost:8080/users", sendThis).then(res => {
+            await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users`, sendThis).then(res => {
                 console.log(res);
                 toast.success("User Details Updated !")
             }).catch(err => {
@@ -74,6 +74,7 @@ export const EditUserDetails = ({ setStateUserId }) => {
     }
     useEffect(() => {
         getData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

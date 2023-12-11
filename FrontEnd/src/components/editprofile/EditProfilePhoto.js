@@ -12,8 +12,7 @@ export const EditProfilePhoto = () => {
     localStorage.setItem("profilephoto", fileName.name)
     const updateProfilePhoto = async (e) => {
         e.preventDefault()
-        console.log(formData)
-        await axios.put("http://localhost:8080/profilephotoupdate", formData).then(res => {
+        await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/profilephotoupdate`, formData).then(res => {
             console.log(res)
         }).catch(err => {
             console.log(err)
@@ -22,8 +21,8 @@ export const EditProfilePhoto = () => {
     return (
         <>
             <form onSubmit={updateProfilePhoto} encType="multipart/form-data">
-                <div className='card mt-1'>
-                    <div className='flex-container card-header p-4'>
+                <div className='card'>
+                    <div className='flex-container card-header p-3'>
                         <div className='font-weight-bold'>
                             Profile Photo
                         </div>

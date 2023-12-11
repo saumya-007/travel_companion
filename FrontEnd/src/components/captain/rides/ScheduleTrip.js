@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
@@ -70,8 +71,7 @@ export const ScheduleTrip = (props) => {
                 fairType: fairType,
                 customFairAmount: fair,
             }
-            axios.post("http://localhost:8080/trips", sendThis).then(res => {
-                // console.log(res)
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips`, sendThis).then(res => {
                 props.setAdded("added")
                 toast.success("Trip Added Succesfully !")
             }).catch(err => {
@@ -80,13 +80,13 @@ export const ScheduleTrip = (props) => {
         }
     }
     useEffect(() => {
-        axios.get("http://localhost:8080/cities").then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/cities`).then(res => {
             setCityDropDown(res.data.data)
         })
     }, [])
     return (
         <>
-            <div className="card mt-1">
+            <div className="card">
                 <div className="card-body p-5">
                     <form onSubmit={setTrip}>
                         <div className="form-group">

@@ -2,6 +2,7 @@ import React from 'react'
 import { ResultsList } from './ResultsList'
 
 export const Results = (props) => {
+    // eslint-disable-next-line no-unused-vars
     let count = 0;
     return (
         <>

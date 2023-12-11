@@ -3,7 +3,6 @@ import { SortedRequestsItem } from './SortedRequestsItem';
 
 export const SortedRequests = (props) => {
 
-    console.log(props.data.query);
     return (
         <>
 
