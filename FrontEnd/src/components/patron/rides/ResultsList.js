@@ -18,7 +18,7 @@ export const ResultsList = ({ trips }) => {
                 user: user_id,
                 isAccepted: "requested",
             }
-            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengers`, sendThis).then(res => {
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/tripPassengers`, sendThis).then(res => {
                 console.log(res)
             }).catch(err => {
                 console.log(err)
@@ -31,7 +31,7 @@ export const ResultsList = ({ trips }) => {
     }
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengerStatus/` + trips._id + "/" + localStorage.getItem("userId")).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/tripPassengerStatus/` + trips._id + "/" + localStorage.getItem("userId")).then(res => {
             if (res) {
                 if (res.data.data[0] === undefined) {
                     setStatus("N/A")

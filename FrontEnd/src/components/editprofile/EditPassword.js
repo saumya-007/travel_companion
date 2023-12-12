@@ -29,7 +29,7 @@ export const EditPassword = ({ stateUserId }) => {
             userId: stateUserId,
         };
         if (password === repassword && password !== '') {
-            axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users`, sendThis).then(res => {
+            axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/users`, sendThis).then(res => {
                 formPassword.current.value = null;
                 formRepassword.current.value = null;
             }).catch(err => {

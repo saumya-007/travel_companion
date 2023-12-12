@@ -24,7 +24,7 @@ export const ConversationList = ({ conversations, connectedUsers }) => {
     }
     useEffect(() => {
         const patronUser = conversations.members.find((member) => member !== localStorage.getItem("userId"))
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users/` + patronUser).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/` + patronUser).then(res => {
             setPatronId(res.data.data._id)
             // includesUsers(res.data.data._id,)
             setPatronName(res.data.data.firstName);

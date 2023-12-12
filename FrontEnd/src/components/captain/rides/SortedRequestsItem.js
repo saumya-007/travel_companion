@@ -8,7 +8,7 @@ export const SortedRequestsItem = (props) => {
     let [disabled, setDisabled] = useState()
     let [status, setStatus] = useState("")
     const apiCall = (sendThis) => {
-        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengers`, sendThis).then(res => {
+        axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/tripPassengers`, sendThis).then(res => {
             setDisabled(true)
         }).catch(err => {
             console.log(err)
@@ -29,7 +29,7 @@ export const SortedRequestsItem = (props) => {
                 trip: props.data.trip._id
             }
             setStatus("changedtoaccepted")
-            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/conversations`, sendItem).then(res => {
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/conversations`, sendItem).then(res => {
             }).catch(err => {
                 console.log(err)
             })

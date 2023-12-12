@@ -14,7 +14,7 @@ export const Rides = () => {
     let [added, setAdded] = useState();
 
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + localStorage.getItem('userId')).then(res => {
             let vehicleName = []
             res.data.data.map(ele => vehicleName.push(ele.vehicleName))
             setVehicles(vehicleName)
@@ -23,7 +23,7 @@ export const Rides = () => {
         })
     }, [])
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -32,7 +32,7 @@ export const Rides = () => {
         })
     }, [])
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -41,7 +41,7 @@ export const Rides = () => {
         })
     }, [added])
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + localStorage.getItem('userId')).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/trips/` + localStorage.getItem('userId')).then(res => {
             setTrips(res.data.data)
             setDeleted("deletedcalled")
             setAdded("addedcalled")

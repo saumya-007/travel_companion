@@ -24,8 +24,15 @@ const app = express();
 //middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-app.options('*', cors())
+// const corsOptions = {
+//     origin: '*',
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true,  
+//     optionsSuccessStatus: 204,
+//  };
+  
+// app.use(cors(corsOptions));
+  
 
 //database
 mongoose.connect(`mongodb+srv://${process.env.MONGO_CLUSTER_USERNAME}:${process.env.MONGO_CLUSTER_PASSWORD}@${process.env.MONGO_CLUSTER_DB}.w0shzi8.mongodb.net/?retryWrites=true&w=majority`, async function (err) {

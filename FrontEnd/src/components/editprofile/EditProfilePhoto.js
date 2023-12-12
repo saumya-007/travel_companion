@@ -12,7 +12,7 @@ export const EditProfilePhoto = () => {
     localStorage.setItem("profilephoto", fileName.name)
     const updateProfilePhoto = async (e) => {
         e.preventDefault()
-        await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/profilephotoupdate`, formData).then(res => {
+        await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/profilephotoupdate`, formData).then(res => {
             console.log(res)
         }).catch(err => {
             console.log(err)

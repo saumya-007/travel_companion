@@ -29,7 +29,7 @@ export const Login = () => {
             password: passwordForm.current.value,
             role: role,
         }
-        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/login`, sendThis).then(res => {
+        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/login`, sendThis).then(res => {
             if (res.data.status === 200) {
                 let userdata = decodeToken(res.data.data)
 

@@ -5,7 +5,7 @@ import { format } from 'timeago.js'
 export const Message = ({ own, message }) => {
     let [photo, setPhoto] = useState()
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users/` + message.sender).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/` + message.sender).then(res => {
             setPhoto(res.data.data.profilephoto);
         }).catch(err => {
             console.log(err);

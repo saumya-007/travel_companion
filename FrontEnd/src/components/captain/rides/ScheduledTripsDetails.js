@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export const ScheduledTripsDetails = ({ data, setDeleted }) => {
     let navigate = useNavigate()
     const deleteTrip = () => {
-        axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + data._id).then(res => {
+        axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}/trips/` + data._id).then(res => {
             setDeleted("deleted")
             toast.success("Deleted Successfully !")
         }).catch(err => {

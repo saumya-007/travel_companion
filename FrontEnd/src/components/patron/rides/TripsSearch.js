@@ -21,7 +21,7 @@ export const TripsSearch = () => {
         if (startLocation === endLocation) {
             toast.error("Please Select Different Start and End Locations !")
         } else {
-            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips/` + startLocation + '/' + endLocation).then(res => {
+            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/trips/` + startLocation + '/' + endLocation).then(res => {
                 console.log(res)
                 setTrips(res.data.data)
                 let sendThis = {
@@ -29,7 +29,7 @@ export const TripsSearch = () => {
                     start: startLocation,
                     end: endLocation,
                 }
-                axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/addsearch`, sendThis).then(res => {
+                axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/addsearch`, sendThis).then(res => {
                 }).catch(err => {
                     console.log(err);
                 })
@@ -41,12 +41,12 @@ export const TripsSearch = () => {
     }
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/addsearch/` + localStorage.getItem("userId")).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/addsearch/` + localStorage.getItem("userId")).then(res => {
             setPreviousSearches(res.data.data)
         }).catch(err => {
             console.log(err);
         })
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/cities`).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/cities`).then(res => {
             setCityDropDown(res.data.data)
         })
     }, [])

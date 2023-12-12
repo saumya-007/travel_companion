@@ -59,7 +59,7 @@ export const Signup = () => {
         if (fileName !== undefined) {
             formData.append("profilephoto", fileName)
             if (passwordForm.current.value === repasswordForm.current.value && repasswordForm.current.value.length > 3 && gender !== undefined && numberForm.current.value.length === 10 && role !== "default") {
-                await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users`, formData).then(res => {
+                await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/users`, formData).then(res => {
                     
                     if (res.data.status === -1) {
                         toast.error("User Already Exist !")

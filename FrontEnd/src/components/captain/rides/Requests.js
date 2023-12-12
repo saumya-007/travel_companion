@@ -10,7 +10,7 @@ export const Requests = () => {
     let count = 0
     let [tripsRequest, setTripRequests] = useState();
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/tripPassengers/` + localStorage.getItem("userId")).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/tripPassengers/` + localStorage.getItem("userId")).then(res => {
             setTripRequests(res.data.data)
         }).catch(err => {
             console.log(err)

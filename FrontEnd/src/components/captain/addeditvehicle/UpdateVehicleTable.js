@@ -44,7 +44,7 @@ export const UpdateVehicleTable = (props) => {
                 registrationNumber: registrationNumber,
             }
 
-            axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles`, sendThis).then(res => {
+            axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles`, sendThis).then(res => {
                 props.setUpdated("updated")
                 if (tempCategory !== "")
                     setVehicleCategory(tempCategory)
@@ -59,7 +59,7 @@ export const UpdateVehicleTable = (props) => {
 
     const deleteVehicle = () => {
         if (window.confirm("Are you sure about removing the vehicle ?")) {
-            axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + data._id).then(res => {
+            axios.delete(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + data._id).then(res => {
                 props.setDeleted("deleted")
                 toast.success("Vehicle Deleted Successfully !")
             }).catch(err => {
@@ -69,7 +69,7 @@ export const UpdateVehicleTable = (props) => {
     }
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/category`).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/category`).then(res => {
             setDropDown(res.data.data)
         }).catch(err => {
             console.log(err)

@@ -13,7 +13,7 @@ export const EditVehicle = () => {
     let [added, setAdded] = useState('');
     let [update, setUpdated] = useState('');
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + user_id).then(res => {
             setData(res.data.data);
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -23,7 +23,7 @@ export const EditVehicle = () => {
         })
     }, [])
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + user_id).then(res => {
             setData(res.data.data);
             setDeleted("deletedcalled")
             setAdded("addedcalled")
@@ -33,7 +33,7 @@ export const EditVehicle = () => {
         })
     }, [added, deleted, update])
     // useEffect(async () => {
-    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + user_id).then(res => {
     //         setData(res.data.data);
     //         setDeleted("deletedcalled")
     //         setAdded("addedcalled")
@@ -43,7 +43,7 @@ export const EditVehicle = () => {
     //     })
     // }, [deleted])
     // useEffect(async () => {
-    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles/` + user_id).then(res => {
+    //     await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles/` + user_id).then(res => {
     //         setData(res.data.data);
     //         setDeleted("deletedcalled")
     //         setAdded("addedcalled")

@@ -52,7 +52,7 @@ export const AddVehicle = (props) => {
                 registrationNumber: registrationNumber,
                 isActive: false,
             }
-            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/vehicles`, sendThis).then(res => {
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/vehicles`, sendThis).then(res => {
                 console.log(res)
                 props.setAdded("added")
                 setVehicleCapacity("default")
@@ -64,7 +64,7 @@ export const AddVehicle = (props) => {
         }
     }
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/category`).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/category`).then(res => {
             setDropDown(res.data.data)
         }).catch(err => {
             console.log(err)

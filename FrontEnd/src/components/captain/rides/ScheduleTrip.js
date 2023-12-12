@@ -71,7 +71,7 @@ export const ScheduleTrip = (props) => {
                 fairType: fairType,
                 customFairAmount: fair,
             }
-            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/trips`, sendThis).then(res => {
+            axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/trips`, sendThis).then(res => {
                 props.setAdded("added")
                 toast.success("Trip Added Succesfully !")
             }).catch(err => {
@@ -80,7 +80,7 @@ export const ScheduleTrip = (props) => {
         }
     }
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/cities`).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/cities`).then(res => {
             setCityDropDown(res.data.data)
         })
     }, [])

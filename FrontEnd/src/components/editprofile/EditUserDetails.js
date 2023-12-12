@@ -20,7 +20,7 @@ export const EditUserDetails = ({ setStateUserId }) => {
 
     //FEATCHING USERINFO AND SETTING IT TO STATE VARIABLES
     const getData = () => {
-        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users/` + localStorage.getItem('userId')).then(res => {
+        axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/users/` + localStorage.getItem('userId')).then(res => {
             setUserId(res.data.data._id);
             setStateUserId(res.data.data._id);
             setName(res.data.data.firstName);
@@ -64,7 +64,7 @@ export const EditUserDetails = ({ setStateUserId }) => {
                 userId: userId,
             };
             localStorage.setItem("userName", name)
-            await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/users`, sendThis).then(res => {
+            await axios.put(`${process.env.REACT_APP_BACKEND_SERVER}/users`, sendThis).then(res => {
                 console.log(res);
                 toast.success("User Details Updated !")
             }).catch(err => {

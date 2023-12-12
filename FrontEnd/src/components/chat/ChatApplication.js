@@ -36,7 +36,7 @@ export const ChatApplication = () => {
             text: newMessage.current.value,
         })
 
-        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/messages`, sendThis).then(res => {
+        await axios.post(`${process.env.REACT_APP_BACKEND_SERVER}/messages`, sendThis).then(res => {
             setMessages([...messages, res.data.data]);
             newMessage.current.value = ""
         }).catch(err => {
@@ -74,7 +74,7 @@ export const ChatApplication = () => {
     }, [localStorage.getItem("userId")])
 
     useEffect(async () => {
-        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/conversations/` + localStorage.getItem("userId")).then(res => {
+        await axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/conversations/` + localStorage.getItem("userId")).then(res => {
             setConversations(res.data.data);
         }).catch(err => {
             console.log(err)
@@ -88,7 +88,7 @@ export const ChatApplication = () => {
 
     useEffect(() => {
         if (currentChat) {
-            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}:${process.env.REACT_APP_BACKEND_SERVER_PORT}/messages/` + currentChat._id).then(res => {
+            axios.get(`${process.env.REACT_APP_BACKEND_SERVER}/messages/` + currentChat._id).then(res => {
                 setMessages(res.data.data);
             }).catch(err => {
                 console.log(err);
