@@ -7,4 +7,4 @@ BackEnd/socket/.env
 BackEnd/React-app-files
 FrontEnd/package-lock.json
 BackEnd/package-lock.json
-BackEnd/vercel.json
+# BackEnd/vercel.json
