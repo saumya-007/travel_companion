@@ -1,4 +1,7 @@
 FrontEnd/node_modules
+FrontEnd/.env
 BackEnd/node_modules
+BackEnd/.env
 BackEnd/socket/node_modules
+BackEnd/socket/.env
 BackEnd/React-app-files
