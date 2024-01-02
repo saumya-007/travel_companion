@@ -1,11 +1,12 @@
 const promises = require("fs").promises
 const csv = require("csv-parser")
 const Readable = require('stream').Readable
+const join = require('path').join;
 /**
  * Once can download the csv from here anc change the path as per saved file location
     https://simplemaps.com/data/world-cities
  */
-const csvFileBasePath = "/home/ad.rapidops.com/saumya.dixit/Downloads/All Cities/worldcities.csv";
+const csvFileBasePath = join(__dirname, "worldcities.csv");
 
 async function parseCSV(csvData) {
     return new Promise((resolve, reject) => {
